@@ -1,0 +1,3 @@
+binpath="/home/croux/Programmes/DILSmcsnp/bin"
+snakemake -p --cores 4 --snakefile ${binpath}/Snakefile_gw --configfile test3.yaml
+

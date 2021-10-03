@@ -1,0 +1,544 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job                     count    min threads    max threads
+--------------------  -------  -------------  -------------
+Fis                         1              1              1
+fasta2ABC                   1              1              1
+gof                         1              4              4
+modelComparison             1              4              4
+simulationsModelComp       28              1              1
+targets                     1              1              1
+total                      33              1              4
+
+Select jobs to execute...
+
+[Sun Oct  3 08:10:14 2021]
+rule fasta2ABC:
+    input: /home/croux/Programmes/DILSmcsnp/test/mytilus_renamed.fas, /home/croux/Programmes/DILSmcsnp/test/test3.yaml
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/config.yaml, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/infos.txt
+    jobid: 2
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j
+    resources: tmpdir=/tmp
+
+
+		cd /home/croux/Programmes/DILSmcsnp/test/jfds8981j
+		python2 /home/croux/Programmes/DILSmcsnp/bin/fasta2ABC_2pops_gw.py /home/croux/Programmes/DILSmcsnp/test/mytilus_renamed.fas jfds8981j Spring Herceg NA coding 30 0.2 4 2e-07 /home/croux/Programmes/DILSmcsnp/bin
+		python2 /home/croux/Programmes/DILSmcsnp/bin/copy.py /home/croux/Programmes/DILSmcsnp/test/test3.yaml /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/config.yaml
+		
+
+[Sun Oct  3 08:10:14 2021]
+rule Fis:
+    input: /home/croux/Programmes/DILSmcsnp/test/mytilus_renamed.fas
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/Fis.txt
+    jobid: 1
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/Fis.py /home/croux/Programmes/DILSmcsnp/test/mytilus_renamed.fas coding /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/Fis.txt	
+		
+[Sun Oct  3 08:10:34 2021]
+Finished job 2.
+1 of 33 steps (3%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:10:34 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_2N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_2N_1/ABCstat.txt
+    jobid: 11
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SC_2M_2N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 SC_2M_2N Spring Herceg modelComp SC_2M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+
+[Sun Oct  3 08:10:34 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_2N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_2N_0/ABCstat.txt
+    jobid: 26
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=IM_2M_2N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 IM_2M_2N Spring Herceg modelComp IM_2M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+
+[Sun Oct  3 08:10:34 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_2N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_2N_0/ABCstat.txt
+    jobid: 18
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=AM_2M_2N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 AM_2M_2N Spring Herceg modelComp AM_2M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:11:20 2021]
+Finished job 26.
+2 of 33 steps (6%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:11:20 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_1N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_1N_0/ABCstat.txt
+    jobid: 12
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=AM_1M_1N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 AM_1M_1N Spring Herceg modelComp AM_1M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:11:20 2021]
+Finished job 11.
+3 of 33 steps (9%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:11:20 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_2N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_2N_1/ABCstat.txt
+    jobid: 27
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=IM_2M_2N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 IM_2M_2N Spring Herceg modelComp IM_2M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:11:29 2021]
+Finished job 18.
+4 of 33 steps (12%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:11:29 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_1N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_1N_0/ABCstat.txt
+    jobid: 4
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SC_1M_1N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 SC_1M_1N Spring Herceg modelComp SC_1M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:12:07 2021]
+Finished job 27.
+5 of 33 steps (15%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:12:07 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_2N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_2N_1/ABCstat.txt
+    jobid: 19
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=AM_2M_2N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 AM_2M_2N Spring Herceg modelComp AM_2M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:12:18 2021]
+Finished job 12.
+6 of 33 steps (18%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:12:18 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_1N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_1N_1/ABCstat.txt
+    jobid: 13
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=AM_1M_1N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 AM_1M_1N Spring Herceg modelComp AM_1M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:12:29 2021]
+Finished job 4.
+7 of 33 steps (21%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:12:29 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_1N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_1N_0/ABCstat.txt
+    jobid: 28
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SI_1N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 SI_1N Spring Herceg modelComp SI_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:13:00 2021]
+Finished job 19.
+8 of 33 steps (24%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:13:00 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_1N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_1N_1/ABCstat.txt
+    jobid: 5
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SC_1M_1N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 SC_1M_1N Spring Herceg modelComp SC_1M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:13:11 2021]
+Finished job 13.
+9 of 33 steps (27%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:13:11 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_1N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_1N_0/ABCstat.txt
+    jobid: 20
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=IM_1M_1N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 IM_1M_1N Spring Herceg modelComp IM_1M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:13:20 2021]
+Finished job 28.
+10 of 33 steps (30%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:13:20 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_2N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_2N_1/ABCstat.txt
+    jobid: 7
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SC_1M_2N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 SC_1M_2N Spring Herceg modelComp SC_1M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:13:53 2021]
+Finished job 5.
+11 of 33 steps (33%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:13:53 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_2N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_2N_1/ABCstat.txt
+    jobid: 15
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=AM_1M_2N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 AM_1M_2N Spring Herceg modelComp AM_1M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:14:02 2021]
+Finished job 20.
+12 of 33 steps (36%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:14:02 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_2N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_2N_0/ABCstat.txt
+    jobid: 22
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=IM_1M_2N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 IM_1M_2N Spring Herceg modelComp IM_1M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:14:08 2021]
+Finished job 7.
+13 of 33 steps (39%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:14:08 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_2N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_2N_0/ABCstat.txt
+    jobid: 30
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SI_2N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 SI_2N Spring Herceg modelComp SI_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:14:44 2021]
+Finished job 15.
+14 of 33 steps (42%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:14:44 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_1N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_1N_1/ABCstat.txt
+    jobid: 9
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SC_2M_1N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 SC_2M_1N Spring Herceg modelComp SC_2M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:14:50 2021]
+Finished job 22.
+15 of 33 steps (45%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:14:50 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_1N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_1N_1/ABCstat.txt
+    jobid: 17
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=AM_2M_1N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 AM_2M_1N Spring Herceg modelComp AM_2M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:14:52 2021]
+Finished job 30.
+16 of 33 steps (48%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:14:52 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_1N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_1N_0/ABCstat.txt
+    jobid: 24
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=IM_2M_1N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 IM_2M_1N Spring Herceg modelComp IM_2M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:15:28 2021]
+Finished job 9.
+17 of 33 steps (52%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:15:28 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_1N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_1N_0/ABCstat.txt
+    jobid: 8
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SC_2M_1N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 SC_2M_1N Spring Herceg modelComp SC_2M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:15:41 2021]
+Finished job 24.
+18 of 33 steps (55%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:15:41 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_2N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_2N_0/ABCstat.txt
+    jobid: 14
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=AM_1M_2N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 AM_1M_2N Spring Herceg modelComp AM_1M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:15:50 2021]
+Finished job 17.
+19 of 33 steps (58%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:15:50 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_1N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_1N_1/ABCstat.txt
+    jobid: 29
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SI_1N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 SI_1N Spring Herceg modelComp SI_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:16:24 2021]
+Finished job 8.
+20 of 33 steps (61%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:16:24 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_2N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_2N_1/ABCstat.txt
+    jobid: 31
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SI_2N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 SI_2N Spring Herceg modelComp SI_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:16:43 2021]
+Finished job 14.
+21 of 33 steps (64%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:16:43 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_2N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_2N_0/ABCstat.txt
+    jobid: 10
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SC_2M_2N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 SC_2M_2N Spring Herceg modelComp SC_2M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:16:46 2021]
+Finished job 29.
+22 of 33 steps (67%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:16:46 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_1N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_1N_1/ABCstat.txt
+    jobid: 25
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=IM_2M_1N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 IM_2M_1N Spring Herceg modelComp IM_2M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:17:22 2021]
+Finished job 31.
+23 of 33 steps (70%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:17:22 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_1N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_1N_0/ABCstat.txt
+    jobid: 16
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=AM_2M_1N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 AM_2M_1N Spring Herceg modelComp AM_2M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:17:40 2021]
+Finished job 25.
+24 of 33 steps (73%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:17:40 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_2N_0/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_2N_0/ABCstat.txt
+    jobid: 6
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=SC_1M_2N, i=0
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 0 SC_1M_2N Spring Herceg modelComp SC_1M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:17:40 2021]
+Finished job 10.
+25 of 33 steps (76%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:17:40 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_1N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_1N_1/ABCstat.txt
+    jobid: 21
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=IM_1M_1N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 IM_1M_1N Spring Herceg modelComp IM_1M_1N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:18:20 2021]
+Finished job 16.
+26 of 33 steps (79%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:18:20 2021]
+rule simulationsModelComp:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/nLoci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_2N_1/priorfile.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_2N_1/ABCstat.txt
+    jobid: 23
+    wildcards: projectpath=/home/croux/Programmes/DILSmcsnp/test, timeStamp=jfds8981j, model=IM_1M_2N, i=1
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/submit_simulations_2pop.py 0 200 1 IM_1M_2N Spring Herceg modelComp IM_1M_2N /home/croux/Programmes/DILSmcsnp/test/test3.yaml jfds8981j /home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:18:38 2021]
+Finished job 6.
+27 of 33 steps (82%) done
+[Sun Oct  3 08:18:39 2021]
+Finished job 21.
+28 of 33 steps (85%) done
+[Sun Oct  3 08:19:02 2021]
+Finished job 23.
+29 of 33 steps (88%) done
+Select jobs to execute...
+[Sun Oct  3 08:20:29 2021]
+Finished job 1.
+30 of 33 steps (91%) done
+
+[Sun Oct  3 08:20:29 2021]
+rule gof:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_2N_1/ABCstat.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/gof.txt
+    jobid: 32
+    threads: 4
+    resources: tmpdir=/tmp
+
+
+		python2 /home/croux/Programmes/DILSmcsnp/bin/gof_gw.py jfds8981j /home/croux/Programmes/DILSmcsnp/test
+		
+[Sun Oct  3 08:20:29 2021]
+Finished job 32.
+31 of 33 steps (94%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:20:29 2021]
+rule modelComparison:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_1M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SC_2M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_1M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/AM_2M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_1M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/IM_2M_2N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_1N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_1N_1/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_2N_0/ABCstat.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/SI_2N_1/ABCstat.txt
+    output: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/report_Spring_Herceg.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/best_model.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/hierarchical_models.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/sfs_plot.pdf, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/sfs_table.txt
+    jobid: 3
+    threads: 4
+    resources: tmpdir=/tmp
+
+
+		Rscript /home/croux/Programmes/DILSmcsnp/bin/model_comp_2pop_allModels_gw.R nameA=Spring nameB=Herceg timeStamp=jfds8981j nMin=4 sub_dir_sim=modelComp nSubdir=2 ntree=100 ncores=8 useSFS=1 population_growth=constant modeBarrier=bimodal binpath=/home/croux/Programmes/DILSmcsnp/bin
+		
+[Sun Oct  3 08:20:36 2021]
+Finished job 3.
+32 of 33 steps (97%) done
+Select jobs to execute...
+
+[Sun Oct  3 08:20:36 2021]
+rule targets:
+    input: /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/Fis.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/config.yaml, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/sfs_plot.pdf, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/sfs_table.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/infos.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/report_Spring_Herceg.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/best_model.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/hierarchical_models.txt, /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/gof.txt
+    jobid: 0
+    resources: tmpdir=/tmp
+
+
+		tar -zcvf jfds8981j.tar.gz /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/config.yaml /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/bpfile /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/Fis.txt /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_global.txt /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCstat_loci.txt /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/ABCjsfs.txt /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/sfs_table.txt /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/sfs_plot.pdf /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/infos.txt /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/hierarchical_models.txt /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/best_model.txt /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/modelComp/report_Spring_Herceg.txt /home/croux/Programmes/DILSmcsnp/test/jfds8981j/jfds8981j/gof.txt
+		touch slurm_tmp.out
+		rm slurm*out
+#		rm -rf jfds8981j
+		
+[Sun Oct  3 08:20:36 2021]
+Finished job 0.
+33 of 33 steps (100%) done
+Complete log: /home/croux/Programmes/DILSmcsnp/test/.snakemake/log/2021-10-03T081014.790648.snakemake.log
