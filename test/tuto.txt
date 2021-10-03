@@ -1,3 +1,4 @@
-binpath="/home/croux/Programmes/DILSmcsnp/bin"
-snakemake -p --cores 4 --snakefile ${binpath}/Snakefile_gw --configfile test3.yaml
+binpath="/shared/ifbstor1/projects/metapop/DILSmcsnp/bin"
+#snakemake -p --cores 4 --snakefile ${binpath}/Snakefile_gw --configfile test.yaml
+${binpath}/DILSmcsnp.sh test2.yaml
 

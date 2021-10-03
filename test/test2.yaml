@@ -13,8 +13,8 @@ nMin: 4
 recomb: 0.0000002
 useSFS: 1
 useOutgroup: 0
-config_yaml: /shared/ifbstor1/projects/metapop/DILSmcsnp/test/test.yaml
-timeStamp: jfds8981j
+config_yaml: /shared/ifbstor1/projects/metapop/DILSmcsnp/test/test2.yaml
+timeStamp: zWh7fd1 
 population_growth: constant
 modeBarrier: bimodal
 N_min: 0.5

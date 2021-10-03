@@ -84,8 +84,8 @@ for i in config_yaml:
 config_yaml.close()
 
 min_Tsc = T_bound[0]
-max_Tsc = 0.25
-min_Tam = 0.75
+max_Tsc = 0.1
+min_Tam = 0.5
 
 # read bpfile
 infile = open("bpfile", "r")

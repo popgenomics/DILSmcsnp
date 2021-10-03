@@ -28,8 +28,8 @@
 python = 'python2'
 
 # links to the codes
-binpath = "/shared/ifbstor1/home/croux/softwares/DILSmcsnp/bin"
-projectpath = "/shared/ifbstor1/home/croux/softwares/DILSmcsnp/test"
+binpath = "/shared/ifbstor1/projects/metapop/DILSmcsnp/bin"
+projectpath = "/shared/ifbstor1/projects/metapop/DILSmcsnp/test"
 
 # general property
 nmultilocus = 1000 # number of multilocus simulations per iteration (1000)
