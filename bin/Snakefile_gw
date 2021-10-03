@@ -29,7 +29,8 @@ python = 'python2'
 
 # links to the codes
 binpath = "/shared/ifbstor1/projects/metapop/DILSmcsnp/bin"
-projectpath = "/shared/ifbstor1/projects/metapop/DILSmcsnp/test"
+#projectpath = "/shared/ifbstor1/projects/metapop/DILSmcsnp/test"
+projectpath = "/shared/ifbstor1/projects/metapop/DILS_projects"
 
 # general property
 nmultilocus = 1000 # number of multilocus simulations per iteration (1000)
@@ -56,15 +57,15 @@ ITERATIONS_GOF_2 = range(nIterations_gof)
 nPosterior2 = 100 # (1000)
 
 # informations from the config.yaml file
-mail_address = config['mail_address']
+#mail_address = config['mail_address']
 infile = config['infile']
 region = config['region']
 nspecies = config['nspecies']
 nameA = config['nameA']
 nameB = config['nameB']
-nA = int(config['nA']) # number of sequences in species A
-nB = int(config['nB']) # number of sequences in species B
-nMin = min([nA, nB])
+#nA = int(config['nA']) # number of sequences in species A
+#nB = int(config['nB']) # number of sequences in species B
+#nMin = min([nA, nB])
 nameOutgroup = config['nameOutgroup']
 if nameOutgroup=='NA':
 	outgroup=0
