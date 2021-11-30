@@ -14,4 +14,8 @@ lines 31 and 32
   
 ## in yaml file  
 *infile:* # full path to the fasta file, placed within the projectpath  
-*config_yaml:* # full path to the current yaml file
+*config_yaml:* # full path to the current yaml file  
+  
+## Controlling for the prior distribution  
+We added a second Snakefile (**Snakefile_prior_check**) in order to represent the explored simulations along a continuum of net divergence, for each of the 4 categories of models (AM, IM, SC, SI).  
+

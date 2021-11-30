@@ -1,0 +1,191 @@
+#################################################################################################################################
+#################################################################################################################################
+#####                                                                                                                       #####
+#####    This file is part of Demographic Inferences with Linked Selection : DILS.                                          #####
+#####                                                                                                                       #####   
+#####    DILS is free software: you can redistribute it and/or modify                                                       #####
+#####    it under the terms of the GNU General Public License as published by                                               #####
+#####    the Free Software Foundation, either version 3 of the License, or                                                  #####
+#####    (at your option) any later version.                                                                                #####
+#####                                                                                                                       #####    
+#####    DILS is distributed in the hope that it will be useful,                                                            #####
+#####    but WITHOUT ANY WARRANTY; without even the implied warranty of                                                     #####
+#####    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                                      #####
+#####    GNU General Public License for more details.                                                                       #####
+#####                                                                                                                       #####    
+#####    You should have received a copy of the GNU General Public License                                                  #####
+#####    along with DILS.  If not, see <https://www.gnu.org/licenses/>.                                                     #####
+#####                                                                                                                       #####    
+#####    Please send bugreports with examples or suggestions to                                                             #####
+#####    camille.roux@univ-lille.fr                                                                                         #####
+#####                                                                                                                       #####    
+#####    Or write a post on https://groups.google.com/forum/#!forum/dils---demographic-inferences-with-linked-selection     #####
+#####                                                                                                                       #####
+#################################################################################################################################
+#################################################################################################################################
+
+# python
+python = 'python2'
+
+# links to the codes
+binpath = "/shared/ifbstor1/projects/metapop/DILSmcsnp/bin"
+#projectpath = "/shared/ifbstor1/projects/metapop/DILSmcsnp/test"
+projectpath = "/shared/ifbstor1/projects/metapop/DILS_projects"
+
+# general property
+nmultilocus = 1000 # number of multilocus simulations per iteration (1000)
+
+# model comparison
+nCPU_R = 8 # number of CPUs for the model comp for the model forest R functions (8)
+ntree = 1000 # number of tree for the random forest (RF) model comparison (1000)
+nIterations_model_comp = 10 # number of subdirectories for the simulations used in the RF model comparison (10)
+ITERATIONS_MODEL_COMP = range(nIterations_model_comp)
+MODELS_COMP = ['SC_1M_1N', 'SC_1M_2N', 'SC_2M_1N', 'SC_2M_2N', 'AM_1M_1N', 'AM_1M_2N', 'AM_2M_1N', 'AM_2M_2N', 'IM_1M_1N', 'IM_1M_2N', 'IM_2M_1N', 'IM_2M_2N', 'SI_1N', 'SI_2N']
+
+# first and second estimation of parameters
+nIterations_gof = 10 # number of subdirectories for the simulations used in the nnet param estimates (10)
+nIterations_estim_1_3 = 100 # number of subdirectories for the simulations used in the nnet param estimates (1000)
+ITERATIONS_ESTIMATES_1_3 = range(nIterations_estim_1_3)
+ITERATIONS_GOF = range(nIterations_gof)
+nPosterior1 = 500 # (5000)
+nPosterior3 = 500 # (5000)
+
+# second estimation of parameters
+nIterations_estim_2 = 100 # number of subdirectories for the simulations used in the nnet param estimates (250)
+ITERATIONS_ESTIMATES_2 = range(nIterations_estim_2)
+ITERATIONS_GOF_2 = range(nIterations_gof)
+nPosterior2 = 100 # (1000)
+
+# informations from the config.yaml file
+#mail_address = config['mail_address']
+infile = config['infile']
+region = config['region']
+nspecies = config['nspecies']
+nameA = config['nameA']
+nameB = config['nameB']
+#nA = int(config['nA']) # number of sequences in species A
+#nB = int(config['nB']) # number of sequences in species B
+#nMin = min([nA, nB])
+nameOutgroup = config['nameOutgroup']
+if nameOutgroup=='NA':
+	outgroup=0
+else:
+	outgroup=1
+useSFS = config['useSFS']
+useOutgroup = config['useOutgroup']
+config_yaml = config['config_yaml']
+timeStamp = config['timeStamp']
+population_growth = config['population_growth']
+if population_growth=='constant':
+	submit_simulations='submit_simulations_2pop.py'
+#	submit_simulations_gof='submit_simulations_gof_2pop.py'
+else:
+	submit_simulations='submit_simulations_2pop_popGrowth.py'
+#	submit_simulations_gof='submit_simulations_gof_2pop_popGrowth.py'
+modeBarrier = config['modeBarrier']
+#Nref = (config['N_max'] + config['N_min'])/2.0 # Nref is the mid point of the prior
+
+
+max_N_tolerated = config['max_N_tolerated']
+Lmin = config['Lmin']
+nMin = config['nMin']
+#Nref = (config['N_max'] + config['N_min'])/2.0 # Nref is the mid point of the prior
+Nref = (0 + config['N_max'])/2.0 # Nref is the mid point of the prior
+
+recomb = config['recomb']
+
+
+rule targets:
+	input:
+		yaml = expand("{timeStamp}/{timeStamp}/config.yaml", timeStamp=timeStamp),
+		bpfile = expand("{timeStamp}/{timeStamp}/bpfile", timeStamp=timeStamp),
+		
+		obsstat = expand("{timeStamp}/{timeStamp}/ABCstat_global.txt", timeStamp=timeStamp),
+		obsstatLoci = expand("{timeStamp}/{timeStamp}/ABCstat_loci.txt", timeStamp=timeStamp),
+		obssfs = expand("{timeStamp}/{timeStamp}/ABCjsfs.txt", timeStamp=timeStamp),
+		infosLoci = expand("{timeStamp}/{timeStamp}/infos.txt", timeStamp=timeStamp),
+		
+		plotProba = expand("{timeStamp}/{timeStamp}/plot_proba_models.pdf", timeStamp=timeStamp),
+		plotCount = expand("{timeStamp}/{timeStamp}/plot_nSim.pdf", timeStamp=timeStamp)
+		
+	shell:
+		"""
+		tar -zcvf {timeStamp}.tar.gz {input}
+		"""
+		
+
+# fasta2ABC
+rule fasta2ABC:
+	input:
+		{infile},
+		expand("{config_yaml}", config_yaml=config_yaml)
+	output:
+		"{timeStamp}/{timeStamp}/config.yaml",
+		"{timeStamp}/{timeStamp}/bpfile",
+		"{timeStamp}/{timeStamp}/nLoci.txt",
+		"{timeStamp}/{timeStamp}/ABCjsfs.txt",
+		"{timeStamp}/{timeStamp}/ABCstat_global.txt",
+		"{timeStamp}/{timeStamp}/ABCstat_loci.txt",
+		"{timeStamp}/{timeStamp}/infos.txt"
+	shell:
+		"""
+		cd {timeStamp}
+		{python} {binpath}/fasta2ABC_2pops_gw.py {infile} {timeStamp} {nameA} {nameB} {nameOutgroup} {region} {Lmin} {max_N_tolerated} {nMin} {recomb} {binpath}
+		{python} {binpath}/copy.py {config_yaml} {timeStamp}/config.yaml
+		"""
+		
+# simulations
+rule simulationsReference:
+	params:
+		nmultilocus={nmultilocus}
+	input:
+		"{timeStamp}/{timeStamp}/bpfile",
+		"{timeStamp}/{timeStamp}/nLoci.txt",
+		"{timeStamp}/{timeStamp}/ABCjsfs.txt",
+		"{timeStamp}/{timeStamp}/ABCstat_global.txt",
+		"{timeStamp}/{timeStamp}/ABCstat_loci.txt"
+	output:
+		"{timeStamp}/{timeStamp}/reference/{model}_{i}/priorfile.txt",
+		"{timeStamp}/{timeStamp}/reference/{model}_{i}/ABCstat.txt"
+	threads: 1
+	shell:
+		"""
+		{python} {binpath}/{submit_simulations} {outgroup} {params.nmultilocus} {wildcards.i} {wildcards.model} {nameA} {nameB} reference {wildcards.model} {config_yaml} {timeStamp} {binpath}
+		"""
+
+rule simulationsPODs:
+	params:
+		nmultilocus={nmultilocus}
+	input:
+		"{timeStamp}/{timeStamp}/bpfile",
+		"{timeStamp}/{timeStamp}/nLoci.txt",
+		"{timeStamp}/{timeStamp}/ABCjsfs.txt",
+		"{timeStamp}/{timeStamp}/ABCstat_global.txt",
+		"{timeStamp}/{timeStamp}/ABCstat_loci.txt"
+	output:
+		"{timeStamp}/{timeStamp}/PODs/{model}_{i}/priorfile.txt",
+		"{timeStamp}/{timeStamp}/PODs/{model}_{i}/ABCstat.txt"
+	threads: 1
+	shell:
+		"""
+		{python} {binpath}/{submit_simulations} {outgroup} {params.nmultilocus} {wildcards.i} {wildcards.model} {nameA} {nameB} PODs {wildcards.model} {config_yaml} {timeStamp} {binpath}
+		"""
+# summariseSimulations
+rule figures:
+	params:
+		nameOutgroup={nameOutgroup}
+	input:
+		ABCsfs = expand("{timeStamp}/{timeStamp}/ABCjsfs.txt", timeStamp=timeStamp),
+		ABCstat = expand("{timeStamp}/{timeStamp}/ABCstat_global.txt", timeStamp=timeStamp),
+		ABCsimulationsREF = expand("{timeStamp}/{timeStamp}/reference/{model}_{i}/ABCstat.txt", timeStamp=timeStamp, model=MODELS_COMP, i=ITERATIONS_MODEL_COMP),
+		ABCsimulationsPOD = expand("{timeStamp}/{timeStamp}/PODs/{model}_{i}/ABCstat.txt", timeStamp=timeStamp, model=MODELS_COMP, i=ITERATIONS_MODEL_COMP)
+	output:
+		expand("{timeStamp}/{timeStamp}/plot_proba_models.pdf", timeStamp=timeStamp),
+		expand("{timeStamp}/{timeStamp}/plot_nSim.pdf", timeStamp=timeStamp)
+	threads: nCPU_R
+	shell:
+		"""
+		cd {timeStamp}/{timeStamp}
+		Rscript {binpath}/modelCheck.R
+		"""
+
