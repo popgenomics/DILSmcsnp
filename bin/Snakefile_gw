@@ -24,13 +24,22 @@
 #################################################################################################################################
 #################################################################################################################################
 
-# python
-python = 'python2'
+#######################################################
+#### for USERS: adapt your binpath and projectpath !! #
+#######################################################
+ binpath = "/shared/ifbstor1/projects/metapop/DILSmcsnp/bin"
+ projectpath = "/shared/ifbstor1/projects/metapop/DILS_projects"
 
-# links to the codes
-binpath = "/shared/ifbstor1/projects/metapop/DILSmcsnp/bin"
-#projectpath = "/shared/ifbstor1/projects/metapop/DILSmcsnp/test"
-projectpath = "/shared/ifbstor1/projects/metapop/DILS_projects"
+# binpath = '/home/croux/Programmes/DILSmcsnp/bin'
+# projectpath = '/home/croux/Programmes/DILSmcsnp/test'
+
+
+#######################################################
+#######################################################
+#######################################################
+
+# python
+python = 'python3'
 
 # general property
 nmultilocus = 1000 # number of multilocus simulations per iteration (1000)
@@ -93,12 +102,12 @@ nMin = config['nMin']
 Nref = (0 + config['N_max'])/2.0 # Nref is the mid point of the prior
 
 recomb = config['recomb']
+nLoci = config['nLoci']
 
 
 rule targets:
 	input:
-		fis = expand("{projectpath}/{timeStamp}/{timeStamp}/Fis.txt", projectpath=projectpath, timeStamp=timeStamp),
-		
+#		fis = expand("{projectpath}/{timeStamp}/{timeStamp}/Fis.txt", projectpath=projectpath, timeStamp=timeStamp),
 		yaml = expand("{projectpath}/{timeStamp}/{timeStamp}/config.yaml", projectpath=projectpath, timeStamp=timeStamp),
 		bpfile = expand("{projectpath}/{timeStamp}/{timeStamp}/bpfile", projectpath=projectpath, timeStamp=timeStamp),
 		
@@ -115,10 +124,13 @@ rule targets:
 		gof = expand("{projectpath}/{timeStamp}/{timeStamp}/gof.txt", projectpath=projectpath, timeStamp=timeStamp)
 	shell:
 		"""
-		tar -zcvf {timeStamp}.tar.gz {input.yaml} {input.bpfile} {input.fis} {input.obsstat} {input.obsstatLoci} {input.obssfs} {input.sfsTable} {input.sfsPlot} {input.infosLoci} {input.hierarchicalModel} {input.bestModel} {input.reportModelComp} {input.gof}
+		mkdir res_{timeStamp}
+		mv {input} res_{timeStamp}
+		tar -zcvf {timeStamp}.tar.gz res_{timeStamp}/*
 		touch slurm_tmp.out
 		rm slurm*out
 		rm -rf {timeStamp}
+		rm -rf res_{timeStamp}
 		"""
 		
 
@@ -149,7 +161,7 @@ rule fasta2ABC:
 	shell:
 		"""
 		cd {projectpath}/{timeStamp}
-		{python} {binpath}/fasta2ABC_2pops_gw.py {infile} {timeStamp} {nameA} {nameB} {nameOutgroup} {region} {Lmin} {max_N_tolerated} {nMin} {recomb} {binpath}
+		{python} {binpath}/fasta2ABC_2pops_gw.py {infile} {timeStamp} {nameA} {nameB} {nameOutgroup} {region} {Lmin} {max_N_tolerated} {nMin} {recomb} {binpath} {nLoci}
 		{python} {binpath}/copy.py {config_yaml} {projectpath}/{timeStamp}/{timeStamp}/config.yaml
 		"""
 		

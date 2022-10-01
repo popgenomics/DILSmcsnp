@@ -32,7 +32,7 @@ from math import ceil
 import random
 
 # check the arguments
-if len(sys.argv) != 12:
+if len(sys.argv) != 13:
 	print("\n\tfasta2ABC_2pops.py produces: bpfile (for simulations) and summary statistics (for inferences)")
 	print("\n\033[1;33m\tExample: ./fasta2ABC_2pops.py all_loci.fasta flo mal coding 30 0.1 10 100000 0.00000002 1\033[0m\n")
 	print("\t\targ1 =\tname of the fasta file containing all of the sequences")
@@ -46,10 +46,11 @@ if len(sys.argv) != 12:
 	print("\t\targ9 =\tinteger, corresponding to the minimum number of retained sequences (after rejection).\n\t\t\tif not enough sequences are retained, the loci is excluded from the analysis")
 	print("\t\targ10 =\trecombination rate r per generation and by bp: 0.0000002")
 	print("\t\targ11 =\tpathway to the binary files of DILS: /shared/mfs/data/home/croux/softwares/ABConline/bin")
-	if(len(sys.argv)<12):
-		sys.exit("\n\033[1;31m ERROR in fasta2ABC_2pops.py: 11 arguments are required: {0} missing\033[0m\n".format(12-len(sys.argv)))
-	if(len(sys.argv)>12):
-		sys.exit("\n\033[1;31m ERROR in fasta2ABC_2pops.py: 11 arguments are required: {0} too much\033[0m\n".format(len(sys.argv)-12))
+	print("\t\targ13 =\tnumber of loci to subsample")
+	if(len(sys.argv)<13):
+		sys.exit("\n\033[1;31m ERROR in fasta2ABC_2pops.py: 12 arguments are required: {0} missing\033[0m\n".format(13-len(sys.argv)))
+	if(len(sys.argv)>13):
+		sys.exit("\n\033[1;31m ERROR in fasta2ABC_2pops.py: 12 arguments are required: {0} too much\033[0m\n".format(len(sys.argv)-13))
 
 Nref = 10000
 fileName = sys.argv[1] # example: all_loci.fasta
@@ -63,6 +64,7 @@ max_N_tolerated = float(sys.argv[8]) # if an allele has %N > threshold_N --> seq
 nMin = int(sys.argv[9]) # minimum number of individuals within a species. example: 10
 recomb = float(sys.argv[10]) # recombination rate by bp and by generation. example: 0.00000002
 binpath = sys.argv[11] # pathway to the directory of DILS (fastABC / ABConline) containing all executable files
+nLoci_to_sample = int(sys.argv[12]) # pathway to the directory of DILS (fastABC / ABConline) containing all executable files
 
 test = os.path.isfile(fileName)
 if test == False:
@@ -123,9 +125,13 @@ def fasta2list(fastaFile, nameA, nameB, nameOut, nMin, max_N_tolerated):
 	res[nameB] = {}
 	if nameOut != 'NA':
 		res[nameOut] = {}
-	fasta = open(fastaFile).readlines()
+#	fasta = open(fastaFile).readlines()
+	fasta = open(fastaFile)
 	seqName = [x.split(" ")[0].rstrip().replace('>','') for x in fasta if x[0] == '>']
+	fasta.close()
+	fasta = open(fastaFile)
 	seq = ''.join([x.rstrip() if x[0]!='>' else '@' for x in fasta])[1:].split('@')
+	fasta.close()
 	
 	nsam = {} # number of individuals in both species
 	
@@ -285,8 +291,70 @@ def getScalar(align, L, consensus, region, nameA, nameB):
 	return(scalar)
 
 
+####### lighten the fasta file : start
+fasta = open(fileName)
+seqName = [x.split(" ")[0].rstrip().replace('>','') for x in fasta if x[0] == '>']
+fasta.close()
+
+fasta = open(fileName)
+outfile = open('{timeStamp}/cleaned.fasta'.format(timeStamp=timeStamp), 'w')
+cnt = -1
+
+for line in fasta:
+	if line[0]!='>':
+		cnt += 1
+		propN = line.rstrip().count('N')/len(line.rstrip())
+		if propN <= max_N_tolerated:
+			if nameA in seqName[cnt] or nameB in seqName[cnt]:
+				outfile.write('>{id}\n{seq}\n'.format(id=seqName[cnt], seq=line.rstrip()))
+fasta.close()
+outfile.close()
+fasta = open('{timeStamp}/cleaned.fasta'.format(timeStamp=timeStamp), 'r')
+seqName = [x.split(" ")[0].rstrip().replace('>','') for x in fasta if x[0] == '>']
+fasta.close()
+
+fasta = open('{timeStamp}/cleaned.fasta'.format(timeStamp=timeStamp), 'r')
+seq = ''.join([x.rstrip() if x[0]!='>' else '@' for x in fasta])[1:].split('@')
+fasta.close()
+cnt = -1
+
+aln = {}
+nLoci = len(seq)
+
+fasta = open('{timeStamp}/cleaned.fasta'.format(timeStamp=timeStamp), 'w')
+for i in range(nLoci):
+	locus=seqName[i].split('|')[0]
+	species=seqName[i].split('|')[1]
+	ind=seqName[i].split('|')[2]
+	if locus not in aln:
+		aln[locus] = {}
+	if species in [nameA, nameB]:
+		if species not in aln[locus]:
+			aln[locus][species] = {}
+	if ind not in aln[locus][species]:
+		aln[locus][species][ind] = []
+	aln[locus][species][ind].append(seq[i])
+
+for locus in aln:
+	if nameA in list(aln[locus].keys()) and nameB in list(aln[locus].keys()):
+		if len(aln[locus][nameA])*2>=nMin and len(aln[locus][nameB])*2>=nMin:
+			spA = random.sample(list(aln[locus][nameA].keys()), int(nMin/2))
+			for ind in spA:
+				for allele in range(2):
+					fasta.write('>{locus}|{species}|{ind}|allele{allele}\n{seq}\n'.format(locus=locus, species=nameA, ind=ind, allele=allele+1, seq=aln[locus][nameA][ind][allele]))
+			spB = random.sample(list(aln[locus][nameB].keys()), int(nMin/2))
+			for ind in spB:
+				for allele in range(2):
+					fasta.write('>{locus}|{species}|{ind}|allele{allele}\n{seq}\n'.format(locus=locus, species=nameB, ind=ind, allele=allele+1, seq=aln[locus][nameB][ind][allele]))
+		
+fasta.close()
+####### lighten the fasta file : end 
+
+
 # read the input file
-align = fasta2list(fileName, nameA, nameB, nameOut, nMin, max_N_tolerated)  # align[species][locus]['id', 'seq']
+#align = fasta2list(fileName, nameA, nameB, nameOut, nMin, max_N_tolerated)  # align[species][locus]['id', 'seq']
+cleanedFasta = '{timeStamp}/cleaned.fasta'.format(timeStamp=timeStamp)
+align = fasta2list(cleanedFasta, nameA, nameB, nameOut, nMin, max_N_tolerated)  # align[species][locus]['id', 'seq']
 
 
 if len(align['align'][nameA]) == 0 or len(align['align'][nameB]) == 0:
@@ -818,12 +886,12 @@ if nameOut == 'NA':
 	outgroup_present = 0
 else:
 	outgroup_present = 1
-commande = 'cat {0}/{1}_{2}.ms | pypy {4}/mscalc_2pop_observedDataset_SFS.py {0} {3}'.format(timeStamp, nameA, nameB, outgroup_present, binpath)
+commande = 'cat {timeStamp}/{nameA}_{nameB}.ms | pypy {binpath}/mscalc_2pop_observedDataset_SFS.py {timeStamp} {outgroup} {nLoci_to_sample}'.format(timeStamp=timeStamp, nameA=nameA, nameB=nameB, outgroup=outgroup_present, binpath=binpath, nLoci_to_sample=nLoci_to_sample)
 print(commande)
 os.system(commande)
 
 # remove the useless ms file
-commande = 'rm {0}/{1}_{2}.ms'.format(timeStamp, nameA, nameB)
+commande = 'rm {timeStamp}/{nameA}_{nameB}.ms'.format(timeStamp=timeStamp, nameA=nameA, nameB=nameB)
 #print(commande)
 #os.system(commande)
 

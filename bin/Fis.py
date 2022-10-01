@@ -76,6 +76,8 @@ def compute_Fis(locus, nMin=4, region="coding", bound_0=True):
 			Hs = 1.0
 			for i in alleles:
 				Hs -= (pos_tmp.count(i)/(1.0*len(pos_tmp)))**2
+			n = len(pos_tmp)
+			Hs *= (n/(n-1))
 			
 			# get Ho = proportion of observed  heterozygotes
 			nTot = 0.0
@@ -144,6 +146,7 @@ for species_tmp in species:
 for species_tmp in species:
 	for locus_tmp in align[species_tmp]:
 		# all individuals
+#		print(locus_tmp)
 		res = compute_Fis(locus=align[species_tmp][locus_tmp], nMin=nInd_per_species[species_tmp]*2, region=region, bound_0=True)
 		Fis[species_tmp]['num'] += res['num']
 		Fis[species_tmp]['denom'] += res['denom']

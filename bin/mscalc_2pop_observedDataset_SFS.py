@@ -5,6 +5,8 @@ import sys
 from random import sample
 project_name = sys.argv[1] # the name of the directory containing the project 
 outgroup = int(sys.argv[2]) # if 0: no outgroup, and so, no SFS. If 1: outgroup, and so, SFS
+nLoci_to_sample = int(sys.argv[3]) # number of loci to subSample
+
 #print("outgroup is {0}".format(outgroup))
 def cr_sqrt(x):
 	# returns the square root of a variable x
@@ -239,12 +241,13 @@ rho = [ float(i) for i in infile.readline().strip().split("\t") ]
 infile.close()
 
 nLoci = len(L)
-threshold_sim = 1000
+threshold_sim = nLoci_to_sample
+
 if nLoci < threshold_sim:
-	# if less than 1000 of loci
+	# if less than threshold_sim of loci
 	nLoci_sim = nLoci
 else:
-	# if more than 1000 of loci, then subsample 1000 for simulations only
+	# if more than threshold_sim of loci, then subsample threshold_sim for simulations only
 	nLoci_sim = threshold_sim
 	sampled_loci = sample(range(nLoci), threshold_sim)
 
