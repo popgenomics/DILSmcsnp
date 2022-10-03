@@ -66,7 +66,7 @@ if "SI" in model:
 if "AM" in model:
 	mscommand = "-s tbs -r tbs tbs -I 2 tbs tbs 0 -n 1 tbs -n 2 tbs -en tbs 1 tbs -en tbs 2 tbs -ema tbs 2 0 tbs tbs 0 -ej tbs 2 1 -eN tbs tbs"
 if "SC" in model:
-	mscommand = "-s tbs -r tbs tbs -I 2 tbs tbs 0 -m 1 2 tbs -m 2 1 tbs -n 1 tbs -n 2 tbs -en tbs 1 tbs -en tbs 2 tbs -eM tbs 0 -ej tbs 2 1 -eN tbs tbs"
+	mscommand = "-s tbs -r tbs tbs -I 2 tbs tbs 0 -m 1 2 tbs -m 2 1 tbs -n 1 tbs -n 2 tbs -en tbs 1 tbs -en tbs 2 tbs -ema tbs 2 0 0 0 0 -ej tbs 2 1 -eN tbs tbs"
 if "IM" in model:
 	mscommand = "-s tbs -r tbs tbs -I 2 tbs tbs 0 -n 1 tbs -n 2 tbs -en tbs 1 tbs -en tbs 2 tbs -m 1 2 tbs -m 2 1 tbs -ej tbs 2 1 -eN tbs tbs"
 if "PAN" in model:
@@ -83,6 +83,6 @@ tmp += "cd {0}/{1}/{2}_{3}; ".format(path, sub_dir_sim, sub_dir_model, iteration
 #tmp += "python {0}/priorgen_2pop_popGrowth.py {1} {2} {3} | {0}/msnsam tbs {4} {5} | pypy {0}/mscalc_2pop_SFS.py {6}".format(binpath, model, nmultilocus, config_yaml, nmultilocus*nlocus, mscommand, outgroup)
 tmp += "python3 {0}/priorgen_2pop_popGrowth.py {1} {2} {3} | java -jar {0}/msms3.2rc-b163.jar tbs {4} {5} | pypy {0}/mscalc_2pop_SFS.py {6}".format(binpath, model, nmultilocus, config_yaml, nmultilocus*nlocus, mscommand, outgroup)
 
-#print(tmp)
+print(tmp)
 os.system(tmp) # to submit the job using slurm
 

@@ -50,7 +50,7 @@ help += "\n\n"
 help += "\t\033[1;32;40m#SI\033[0m\n\tmsnsam tbs 10000 -s tbs -r tbs tbs -I 2 tbs tbs 0 -n 1 tbs -n 2 tbs -en tbs 1 tbs -en tbs 2 tbs -ej tbs 2 1 -eN tbs tbs\n"
 help += "\t\033[1;32;40m#AM\033[0m\n\tmsnsam tbs 10000 -s tbs -r tbs tbs -I 2 tbs tbs 0 -n 1 tbs -n 2 tbs -en tbs 1 tbs -en tbs 2 tbs -ema tbs 2 0 tbs tbs 0 -ej tbs 2 1 -eN tbs tbs\n"
 help += "\t\033[1;32;40m#IM\033[0m\n\tmsnsam tbs 10000 -s tbs -r tbs tbs -I 2 tbs tbs 0 -n 1 tbs -n 2 tbs -en tbs 1 tbs -en tbs 2 tbs -m 1 2 tbs -m 2 1 tbs -ej tbs 2 1 -eN tbs tbs\n"
-help += "\t\033[1;32;40m#SC\033[0m\n\tmsnsam tbs 10000 -s tbs -r tbs tbs -I 2 tbs tbs 0 -m 1 2 tbs -m 2 1 tbs -n 1 tbs -n 2 tbs -en tbs 1 tbs -en tbs 2 tbs -eM tbs 0 -ej tbs 2 1 -eN tbs tbs\n\n"
+help += "\t\033[1;32;40m#SC\033[0m\n\tmsnsam tbs 10000 -s tbs -r tbs tbs -I 2 tbs tbs 0 -m 1 2 tbs -m 2 1 tbs -n 1 tbs -n 2 tbs -en tbs 1 tbs -en tbs 2 tbs -ema tbs 2 0 0 0 0 -ej tbs 2 1 -eN tbs tbs\n\n"
 
 help += "\t\033[1;32;40mExample: ./priorgen_2pop_popGrowth.py SC_2M_2N 1000 config_yaml beta\033[0m\n"
 
